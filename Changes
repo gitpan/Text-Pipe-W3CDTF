@@ -1,0 +1,10 @@
+---
+global:
+  name: Text-Pipe-W3CDTF
+releases:
+  - author: 'Marcel Gruenauer <marcel@cpan.org>'
+    changes:
+      - original version
+    date: 2007-12-07T14:15:58Z
+    tags: []
+    version: 0.01
