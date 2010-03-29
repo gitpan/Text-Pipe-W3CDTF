@@ -1,23 +1,47 @@
-use inc::Module::Install;
-include 'Module::AutoInstall';
 
-name 'Text-Pipe-W3CDTF';
-all_from 'lib/Text/Pipe/W3CDTF.pm';
-perl_version '5.006';
+use strict;
+use warnings;
 
-requires 'Text::Pipe';
-requires 'DateTime::Format::W3CDTF';
+ BEGIN { require 5.008; } 
 
-build_requires 'Test::More' => '0.70';
+use ExtUtils::MakeMaker 6.11;
 
-process_templates(
-    first_year => 2007,
-    rest_from  => "$ENV{HOME}/.mitlib/standard_pod",
-    start_tag  => '{%',
-    end_tag    => '%}',
-);
 
-use_standard_tests(without => 'pod_coverage');
-auto_install;
-auto_include;
-WriteAll;
+
+my %WriteMakefileArgs = (
+                       'test' => {
+                                   'TESTS' => 't/*.t'
+                                 },
+                       'NAME' => 'Text::Pipe::W3CDTF',
+                       'DISTNAME' => 'Text-Pipe-W3CDTF',
+                       'CONFIGURE_REQUIRES' => {
+                                                 'ExtUtils::MakeMaker' => '6.11'
+                                               },
+                       'AUTHOR' => 'Marcel Gruenauer <marcel@cpan.org>',
+                       'BUILD_REQUIRES' => {},
+                       'ABSTRACT' => 'Text pipes that convert W3CDTF date-time strings and objects',
+                       'EXE_FILES' => [],
+                       'VERSION' => '1.100890',
+                       'PREREQ_PM' => {
+                                        'Scalar::Util' => '0',
+                                        'parent' => '0',
+                                        'English' => '0',
+                                        'Text::Pipe::Base' => '0',
+                                        'Carp' => '0',
+                                        'DateTime::Format::W3CDTF' => '0',
+                                        'Test::More' => '0.88',
+                                        'File::Find' => '0',
+                                        'File::Temp' => '0',
+                                        'Text::Pipe' => '0'
+                                      },
+                       'LICENSE' => 'perl'
+                     );
+
+
+delete $WriteMakefileArgs{LICENSE}
+  unless eval { ExtUtils::MakeMaker->VERSION(6.31) };
+
+WriteMakefile(%WriteMakefileArgs);
+
+
+
